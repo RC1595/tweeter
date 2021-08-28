@@ -1,17 +1,13 @@
 <template>
   <div>
-    <LogInRegister/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import LogInRegister from './components/LogInRegister.vue'
+
 export default {
   name: 'App',
-  components: {
-    LogInRegister,
-    
-  }
 }
 </script>
 
@@ -25,7 +21,8 @@ export default {
   margin-top: 60px;
 
 }
-template {
+body {
   background-color:lightgreen;
-}
+};
+
 </style>

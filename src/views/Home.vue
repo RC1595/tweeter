@@ -1,23 +1,32 @@
 <template>
-<div>
+<div class="welcome">
   <div>
     <h1>Welcome to Tweeter!</h1>
     <h3>Sign up or log in below</h3>
   </div>
   <div>
-    <LogInRegister/>
+    <LandingPage/>
   </div>
 </div>
   
 </template>
 
 <script>
-  import LogInRegister from '../components/LogInRegister.vue'
+
+import LandingPage from '../components/LandingPage.vue'
   export default {
-    name: 'Login-Register',
+    name: 'Home',
 
     components: {
-      LogInRegister,
+        LandingPage,
     },
   }
 </script>
+
+<style scoped>
+.welcome {
+  background-color: lightgreen;
+}
+
+</style>
+
