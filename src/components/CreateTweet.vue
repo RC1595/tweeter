@@ -23,11 +23,11 @@
         </v-card-actions>
         </v-card>
         </div>
-        <div>
-            {{this.userTweets()}}
+
+        <div></div>
+
         </div>
 
-    </div>
 </template>
 
 <script>
@@ -36,7 +36,8 @@ import cookies from "vue-cookies"
     export default {
         name: 'CreateTweet',
         data: () => ({
-            content: ''
+            content: '',
+            
         }),
         methods:{
             postTweet(){
@@ -57,22 +58,7 @@ import cookies from "vue-cookies"
                     console.error(error+'error');
                 })
             },
-            userTweets(){
-                axios.request({
-                    method: "GET",
-                    url: 'https://tweeterest.ml/api/tweets',
-                    headers: {
-                        'X-Api-Key' : process.env.VUE_APP_API_KEY,
-                        'userId' : cookies.get('userId'),
-                    },
-                    params: cookies.get('userId')
-                }).then((showTweets)=>{
 
-                    console.log(showTweets);
-                }).catch((error)=>{
-                    console.error(error+'error');
-                })
-            }
         }
 
     }

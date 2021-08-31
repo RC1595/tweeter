@@ -1,0 +1,113 @@
+<template>
+    <div id="cardBackground">
+        <div>
+            <v-btn @click="userTweets">Refresh</v-btn>
+            <div v-for="tweet in tweets" 
+            :key="tweet.tweetId"
+            v-bind="tweet">
+            <template>
+            <v-card id="tweetCard"
+                class="mx-auto"
+                color="#ffb6c1"
+                dark
+                max-width="400"
+                align-items="center"
+            >
+                <v-card-title>
+                <v-icon
+                    large
+                    left
+                >
+                    {{tweet.userImageUrl}}
+                </v-icon>
+                <span class="text-h6 font-weight-light">{{tweet.username}}</span>
+                </v-card-title>
+
+                <v-card-text id="tweetContent" class="text-h5 font-weight-bold">
+                {{tweet.content}}
+                </v-card-text>
+
+                <v-card-actions>
+                <v-list-item class="grow">
+                    <v-list-item-avatar color="grey darken-3">
+                    <v-img>
+                        {{tweet.tweetImageUrl}}
+                    </v-img>
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                    <v-list-item-title id="tweetTime">{{tweet.createdAt}}</v-list-item-title>
+                    <v-list-item-title></v-list-item-title>
+                    </v-list-item-content>
+                    <TweetLike/>
+                    <v-row
+                    align="center"
+                    justify="end"
+                    >
+
+                    </v-row>
+                </v-list-item>
+                </v-card-actions>
+            </v-card>
+        </template>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+import axios from "axios"
+import cookies from "vue-cookies"
+import TweetLike from './TweetLike.vue'
+    export default {
+        name: "TweetFeed",
+        components: {TweetLike},
+        data: () => ({
+            content: '',
+            tweets: []
+        }),
+        methods: {       
+            userTweets(){
+                axios.request({
+                    method: "GET",
+                    url: 'https://tweeterest.ml/api/tweets',
+                    headers: {
+                        'X-Api-Key' : process.env.VUE_APP_API_KEY,
+                        
+                    },
+                    params: {
+                        'userId' : cookies.get('userId')
+                    }
+                }).then((response)=>{
+                    this.tweets = response.data;
+                    console.log(this.tweets);
+                    console.log(response);
+                }).catch((error)=>{
+                    console.error(error+'error');
+                })
+            }
+    }
+    }
+</script>
+
+<style scoped>
+#cardBackground {
+    background-color:rgb(56, 99, 56)
+}
+
+#tweetCard {
+    background-color:#ffb6c1;
+    border: 1px solid black;
+    color: black;
+    margin-bottom: 1vh;
+    align-items: center;
+}
+#tweetContent {
+    color: black;
+}
+#tweetTime {
+    color: black;
+}
+
+</style>
