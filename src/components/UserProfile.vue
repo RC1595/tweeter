@@ -85,7 +85,7 @@
                     'userId' : cookies.get('userId')
                 },
                 params:{
-                    userId: cookies.get('userId'),
+                    'userId': cookies.get('userId'),
                 } 
             }).then((response) => {
                 this.username = response.data[0].username

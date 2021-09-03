@@ -1,4 +1,8 @@
 <template>
+<div>
+    <div>
+        <PageHeader/>
+    </div>    
     <div>
         <h1>Already signed up? Log in here</h1>
 <v-row justify="center">
@@ -134,6 +138,7 @@
         </v-card>
     </v-col>
 </v-row>
+    </div>
 
     </div>
 </template>
@@ -142,9 +147,13 @@
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import PageHeader from '../components/PageHeader.vue'
     export default {
         name: 'EditProfile',
-                data: () => ({
+        components: {
+            PageHeader
+        },
+        data: () => ({
             errorMessages: '',
             email: '',
             username: '',

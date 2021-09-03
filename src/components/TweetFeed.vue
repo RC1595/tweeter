@@ -1,8 +1,8 @@
 <template>
     <div id="cardBackground">
         <div>
-            <v-btn @click="userTweets">Refresh</v-btn>
-            <div v-for="tweet in tweets" 
+            <div></div>
+            <div v-for="tweet in tweets.slice().reverse()" 
             :key="tweet.tweetId"
             v-bind="tweet">
             <template>
@@ -67,6 +67,9 @@ import TweetLike from './TweetLike.vue'
             content: '',
             tweets: []
         }),
+        mounted(){
+            this.userTweets()
+        },
         methods: {       
             userTweets(){
                 axios.request({
@@ -81,7 +84,6 @@ import TweetLike from './TweetLike.vue'
                     }
                 }).then((response)=>{
                     this.tweets = response.data;
-                    console.log(this.tweets);
                     console.log(response);
                 }).catch((error)=>{
                     console.error(error+'error');
