@@ -6,20 +6,21 @@
     <h1>Welcome to your Tweeter profile!</h1>
   </div>
   <div id='profileCard'>
-    <UserProfile/>
+    <UserProfile :userId="userId"/>
     {{$route.params.id}}
   </div>
   <div>
     <CreateTweet/>
   </div>
   <div>
-    <TweetFeed/>
+    <TweetFeed :userId="userId"/>
   </div>
 </div>
   
 </template>
 
 <script>
+  import cookies from 'vue-cookies'
   import PageHeader from '../components/PageHeader.vue'
   import UserProfile from '../components/UserProfile.vue'
   import CreateTweet from '../components/CreateTweet.vue'
@@ -30,7 +31,12 @@
       PageHeader,
       UserProfile,
       CreateTweet,
-      TweetFeed}
+      TweetFeed},
+      data() {
+        return {
+          userId: cookies.get('userId')
+        }
+      },
   }
 </script>
 

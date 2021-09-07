@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{getTweetLikes()}}
         <!-- Button Icon from Vuetify -->
         <v-row>
                 <v-col
@@ -11,9 +10,9 @@
                 @click="like(), likeCounter();"
                 icon            
                 >
-                <v-icon>mdi-thumb-up</v-icon>
+                <v-icon id='icon'>mdi-thumb-up</v-icon>
                 </v-btn>
-                <div>{{count}} </div>
+                <div id= 'counter'>{{count}} </div>
             </v-col>
             
         </v-row>
@@ -28,11 +27,22 @@ import cookies from 'vue-cookies'
         data: ()=>({
             isActive: true,
             count: 0,
-            user: "",
+            userId: "",
+            
 
         }),
+        mounted(){
+            this.getTweetLikes()
+        },
+        computed: {
+            users: () => {
+                return this.tweetId.filter(user=> user.userId)
+            }
+        },
 
         methods:{
+
+            //like toggle            
             like(){
                 if (this.isActive==false){
                     this.isActive = true;
@@ -43,6 +53,8 @@ import cookies from 'vue-cookies'
                     
                 }
             },
+
+            //axios call to get tweets
             getTweetLikes(){
                 axios.request ({
                     method: 'GET',
@@ -54,11 +66,13 @@ import cookies from 'vue-cookies'
                         "tweetId": this.tweetId
                     }
                 }).then((response)=>{
-                    console.log(response+'likes');
+                    console.log(response);
                 }).catch((error)=>{
                     console.error(error+'error');
                 })
             },
+
+            //Counter 
             likeCounter (){
                 if (this.isActive == false){
                     this.count += 1;
@@ -70,11 +84,10 @@ import cookies from 'vue-cookies'
                 },
                     data: {
                         'loginToken': cookies.get('token'),
-                        'tweetId': 2047
+                        'tweetId': this.tweetId
                     }
                 }).then((response)=>{
-                    this.tweetId = response.data[0].userId
-                    this.tweetId = response.data[0].username
+                    response.filter(this.data[0].userId)
                     console.log(response);
                 }).catch((error)=>{
                     console.error(error+'error');
@@ -105,9 +118,18 @@ import cookies from 'vue-cookies'
 </script>
 
 <style scoped>
-.likeBtn:active {
+#icon {
+    margin-left: 4vw;
     color:purple;
     
 }
+#icon:active {
+    color:black;
+}
+#counter {
+    padding-left: 3vw;
+}
+
+
 
 </style>

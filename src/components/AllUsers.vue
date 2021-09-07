@@ -1,12 +1,8 @@
 <template>
-<div>
     <div>
-        {{this.userData()}}
-        
-    </div>
-    <div>
-        <template>
-        <v-card
+        <div v-for="user in users" :key="user" v-bind="user[0]">
+            <template>
+                <v-card
             class="mx-auto"
             color="green"
             dark
@@ -37,66 +33,47 @@
                 <v-list-item-content>
                 <v-list-item-title class='z-index 2'>{{birthdate}}</v-list-item-title>
                 <v-list-item-title>{{email}}</v-list-item-title>
-                <v-list-item-title :followId="followId"></v-list-item-title>
                 </v-list-item-content>
-                <FollowUser/>
                 <v-row
                 align="center"
                 justify="end"
                 >
-                <v-btn id= 'pencil'>
-                    <v-icon class='pencilIcon w-2' @click="editor">{{ icons.mdiPencil }}</v-icon>
-                </v-btn>
-
-
                 </v-row>
             </v-list-item>
             </v-card-actions>
         </v-card>
-        </template>
+            </template>
+        </div>
+        
     </div>
-</div>
 </template>
 
 <script>
-    import axios from 'axios'
-    import FollowUser from './FollowUser.vue'
-    import {
-        mdiPencil,
-    }from '@mdi/js'
+import axios from 'axios'
     export default {
-        name: 'UserProfile',
-        components:{
-            FollowUser
-        },
-        props: {
-            userId: Number,
-            followId: Number
-        },
+        name: "AllUsers",
         data: () => ({
+            users: [],
             username: '',
             birthdate: '',
             email: '',
             bio: '',
             bannerUrl: '',
             imageUrl: '',
-            icons: {
-                mdiPencil
-            }
         }),
-        
+        mounted () {
+            this.getAllUsers();
+        },
         methods: {
-            userData(){
+            getAllUsers(){
             axios.request({
                 method: 'GET',
                 url: 'https://tweeterest.ml/api/users',
                 headers: {
                     'X-Api-Key' : process.env.VUE_APP_API_KEY,
-                },
-                params:{
-                    'userId': this.userId,
-                } 
+                }, 
             }).then((response) => {
+                this.users = response.data.userId
                 this.username = response.data[0].username
                 this.birthdate = response.data[0].birthdate
                 this.email = response.data[0].email
@@ -107,19 +84,11 @@
             }).catch((error) =>{
                 console.log(error+'error');
             })
-        },
-        editor(){
-            this.$router.push('EditProfile')
-        }
+            }
         }
     }
-    
 </script>
 
 <style scoped>
-.pencilIcon{
-    align-items: end;
-    justify-items: end;
-}
 
 </style>

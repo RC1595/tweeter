@@ -5,6 +5,7 @@
     </div>    
     <div>
         <h1>Already signed up? Log in here</h1>
+        <!-- V-Card template from vuetify -->
 <v-row justify="center">
     <v-col
         cols="12"

@@ -4,7 +4,8 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import LoginView from '../views/LoginView.vue'
 import Register from '../views/Register.vue'
-import EditProfile from '../views/EditProfile'
+import EditProfile from '../views/EditProfile.vue'
+import Discover from '../views/Discover.vue'
 import User from '../views/User'
 
 Vue.use(VueRouter)
@@ -39,6 +40,11 @@ const routes = [
     path: '/user/:id',
     name: 'User',
     component: User
+  },
+  {
+    path: '/Discover',
+    name: 'Discover',
+    component: Discover
   }
   ]
 

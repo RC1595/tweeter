@@ -15,6 +15,11 @@ import axios from 'axios'
 import cookies from 'vue-cookies'
     export default {
         name: 'PageHeader',
+        // data() {
+        //     return {
+        //         userId: this.userId
+        //     }
+        // },
         methods: {
             goHome (){
                 this.$router.push('/')
@@ -31,8 +36,6 @@ import cookies from 'vue-cookies'
                     url: 'https://tweeterest.ml/api/login',
                     headers: {
                         'X-Api-Key' : process.env.VUE_APP_API_KEY,
-                        'token' : cookies.get('token'),
-                        'userId' : cookies.get('userId')
                     },
                     data: {
                         loginToken: cookies.get('token')

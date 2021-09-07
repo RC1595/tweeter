@@ -4,19 +4,11 @@
         <PageHeader/>
     </div>
     <div>
-        <UserProfile/>
+        <UserProfile :userId="userId"/>
     </div>
     <div>
-        <TweetFeed/>
+        <TweetFeed :userId="userId"/>
         <TweetComments/>
-    </div>
-    <div>
-        <v-btn
-            color="primary"
-            text
-            @click="userInfo">
-            Submit
-        </v-btn>
     </div>
 </div>
     
@@ -24,7 +16,6 @@
 
 <script>
 import axios from 'axios'
-import cookies from 'vue-cookies'
 import UserProfile from '../components/UserProfile.vue'
 import TweetFeed from '../components/TweetFeed.vue'
 import TweetComments from '../components/TweetComment.vue'
@@ -38,6 +29,7 @@ import PageHeader from '../components/PageHeader.vue'
             PageHeader
     },
         data() {
+            
             return {
             userId: this.$route.params.id
             }
@@ -54,10 +46,10 @@ import PageHeader from '../components/PageHeader.vue'
                     'X-Api-Key' : process.env.VUE_APP_API_KEY,
                 },
                 params:{
-                    'userId' : cookies.get('userid'),
+                    'userId' : this.userId,
                 } 
             }).then((response) => {
-                this.userid = response.data[0].userId
+                this.userId = response.data[0].userId
                 console.log(response)
             }).catch((error) =>{
                 console.log(error+'error');

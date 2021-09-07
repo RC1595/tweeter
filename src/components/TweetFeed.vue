@@ -1,7 +1,6 @@
 <template>
     <div id="cardBackground">
         <div>
-            <div></div>
             <div v-for="tweet in tweets.slice().reverse()" 
             :key="tweet.tweetId"
             v-bind="tweet">
@@ -40,10 +39,25 @@
                     <v-list-item-title></v-list-item-title>
                     </v-list-item-content>
                     <TweetLike/>
+                    <FollowUser/>
                     <v-row
                     align="center"
                     justify="end"
                     >
+                    <div>
+                        <v-btn
+                            
+                            class="mx-3"
+                            fab
+                            dark
+                            small
+                            color="cyan"
+                            >
+                        <v-icon dark>
+                            mdi-pencil
+                        </v-icon>
+                        </v-btn>
+                    </div>
 
                     </v-row>
                 </v-list-item>
@@ -58,17 +72,23 @@
 
 <script>
 import axios from "axios"
-import cookies from "vue-cookies"
 import TweetLike from './TweetLike.vue'
+import FollowUser from './FollowUser.vue'
     export default {
         name: "TweetFeed",
-        components: {TweetLike},
+        components: {TweetLike, FollowUser},
+        props: {
+            userId: Number
+        },
+
         data: () => ({
             content: '',
-            tweets: []
+            tweets: [],
+            users: []
         }),
         mounted(){
             this.userTweets()
+            // this.$router.push('Profile')
         },
         methods: {       
             userTweets(){
@@ -80,7 +100,7 @@ import TweetLike from './TweetLike.vue'
                         
                     },
                     params: {
-                        'userId' : cookies.get('userId')
+                        'userId' : this.userId 
                     }
                 }).then((response)=>{
                     this.tweets = response.data;
@@ -89,8 +109,9 @@ import TweetLike from './TweetLike.vue'
                     console.error(error+'error');
                 })
             }
+        },
     }
-    }
+
 </script>
 
 <style scoped>
